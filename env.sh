@@ -46,6 +46,8 @@ aws_elbv2_list_http=$(aws elbv2 describe-listeners --load-balancer-arn $aws_elb2
 
 aws_elbv2_list_https=$(aws elbv2 describe-listeners --load-balancer-arn $aws_elb2_arn | jq .Listeners[1].ListenerArn -r)
 
+#aws_acc_id=$(aws ec2 describe-security-groups --group-names 'Default' --query 'SecurityGroups[0].OwnerId' --output text)
+
 #shmod +x aws_env.sh
 
 #source ./aws_env.sh

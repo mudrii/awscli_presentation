@@ -130,9 +130,29 @@ aws_elbv2_list_http=$(aws elbv2 create-listener --load-balancer-arn  $aws_elb2_a
 
 aws_elbv2_list_https=$(aws elbv2 create-listener  --load-balancer-arn  $aws_elb2_arn --protocol HTTPS --port 443 --certificates CertificateArn=$aws_cert --default-actions Type=forward,TargetGroupArn=$aws_elb2_https_arn | jq .Listeners[].ListenerArn -r)
 
+aws s3api list-buckets --query 'Buckets[].Name' | jq .
 
-aws elbv2 modify-load-balancer-attributes --load-balancer-arn $aws_elb2_arn --attributes Key=access_logs.s3.enabled,Value=true Key=access_logs.s3.bucket,Value=crash-course-elb-logs Key=access_logs.s3.prefix,Value=crashcourse
+aws s3api create-bucket --bucket crash-course-logs1 --region ap-southeast-1 --create-bucket-configuration LocationConstraint=ap-southeast-1 | jq .
 
+aws s3api list-objects --bucket crash-course-logs --query 'Contents[].{Key: Key
+, Size: Size}' | jq .
+
+#aws_account_id=$(aws ec2 describe-security-groups --group-names 'Default' --query 'SecurityGroups[0].OwnerId' --output text)
+
+aws s3api put-bucket-policy --bucket crash-course-logs1 --policy file://aws_elbv2.json
+
+aws s3api get-bucket-policy  --bucket crash-course-logs
+
+aws elbv2 modify-load-balancer-attributes --load-balancer-arn $aws_elb2_arn --attributes Key=access_logs.s3.enabled,Value=true Key=access_logs.s3.bucket,Value=crash-course-logs1 Key=access_logs.s3.prefix,Value=crashcourse | jq .
+
+# creating ec2
+
+aws ec2 describe-key-pairs | jq .
+aws ec2 describe-instance-status | jq .
+aws ec2 describe-instances | jq .Reservations[].Instances[].State.Name
+aws ec2 describe-instances | jq .Reservations[].Instances[].InstanceId
+aws ec2 describe-instances | jq .Reservations[].Instances[].PrivateIpAddress
+aws ec2 describe-instances | jq .Reservations[].Instances[].PublicIpAddress
 
 . ./env.sh
 
