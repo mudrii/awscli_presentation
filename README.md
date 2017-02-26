@@ -7,4 +7,5 @@ About the slides
 ./generate.sh
 ```
 
-(a Makefile would be better but couldn't remember the magic incantations)
+
+Note: Dependencies on reveal.js and pandoc
