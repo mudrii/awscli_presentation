@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Ion Mudreac" />
+  <meta name="dcterms.date" content="2017-02-28" />
+  <title>AWSCli Crash Course</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css"/>
+  <link rel="stylesheet" href="overrides.css"/>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="reveal.js/css/theme/white.css" id="theme">
+  <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+  <script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = 'reveal.js/css/print/pdf.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section>
+    <h1 class="title">AWSCli Crash Course</h1>
+    <h2 class="author">Ion Mudreac</h2>
+    <h3 class="date">28 Feb 2017</h3>
+</section>
+
+<section class="slide level1">
+
+<h3 id="about-me">About me</h3>
+<ul>
+<li>SCB CDO Foundation Services DevOps Lead,</li>
+<li>Economist by training</li>
+<li>AWS Certified</li>
+<li>Leading EDMI, eOps, RPA DevOps Teams</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="about-this-crash-course">About this Crash Course</h3>
+<ul>
+<li>This Crash Course is NOT 100% tested !</li>
+<li>There might be mistakes (Feedback is Welcome)</li>
+<li>There might be missing or incomplete information</li>
+<li>Presentation available online at <a href="">awscli.mudrii.com</a></li>
+<li>Sources of this presentation is available online at <a href="https://willthames.github.io/devops-singapore-2016/">https://mudrii.github.io/devops-AWS-CLI/</a></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="what-is-aws-cli">What is AWS (CLI)</h3>
+<ul>
+<li>The AWS Command Line Interface (CLI) is a unified tool to manage AWS services.</li>
+<li>With just one tool
+<ul>
+<li>can control multiple AWS services</li>
+<li>automate them through scripts</li>
+<li>manage aws resources programmatically</li>
+<li>...</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="why-use-aws-cli">Why use AWS (CLI)</h3>
+<ul>
+<li>Easy to install
+<ul>
+<li>control AWS resources using AWS API</li>
+<li>only python as dependency</li>
+</ul></li>
+<li>No other complicated setup is required
+<ul>
+<li>if you have AWS account and have aws_access_key and aws_secret_key you can run AWS cli against your AWS environment</li>
+<li>make sure your AWS user have right access and right IAM policy</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="aws-cli-platforms-components-and-dependencies">AWS (CLI) Platforms, Components and Dependencies</h3>
+<ul>
+<li>AWS (CLI)Supported Platforms
+<ul>
+<li>Windows, Linux, macOS, Unix</li>
+</ul></li>
+<li>AWS (CLI) Dependencies
+<ul>
+<li>Python 2 version 2.6.5+ or Python 3 version 3.3+</li>
+</ul></li>
+<li>AWS (CLI) Components
+<ul>
+<li><a href="https://github.com/aws/aws-cli">aws-cli</a></li>
+<li><a href="https://github.com/awslabs/aws-shell">aws-shell</a></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="getting-started-with-aws-cli">Getting started with AWS (CLI)</h3>
+<ul>
+<li>Dependencies
+<ul>
+<li><p>Check Python Version:</p>
+<pre><code>python --version</code></pre></li>
+<li><p>Check Pip Version :</p>
+<pre><code>pip --version</code></pre></li>
+<li><p>Check AWS Version :</p>
+<pre><code>aws --version</code></pre></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="getting-started-with-aws-cli-1">Getting started with AWS (CLI)</h3>
+<ul>
+<li>Install AWS (CLI)
+<ul>
+<li><p>With Python :</p>
+<pre><code>pip install --upgrade --user awscli aws-shell</code></pre></li>
+<li><p>macOS :</p>
+<pre><code>brew install awscli</code></pre></li>
+<li><p>Windows: can install <a href="https://s3.amazonaws.com/aws-cli/AWSCLI64.msi">32</a> bit or <a href="https://s3.amazonaws.com/aws-cli/AWSCLI64.msi">64</a> bit installer</p></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="configuring-the-aws-cli">Configuring the AWS (CLI)</h3>
+<ul>
+<li>Shell Command Completion
+<ul>
+<li>find your shell : <em><strong>echo $SHELL</strong></em></li>
+<li>find aws_completer : <em><strong>which aws_completer</strong></em></li>
+<li>enable command completion :
+<ul>
+<li><p>bash :</p>
+<pre><code>complete -C &#39;/usr/local/bin/aws_completer&#39; aws</code></pre></li>
+<li><p>zsh :</p>
+<pre><code>source /usr/local/bin/aws_zsh_completer.sh</code></pre></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="configuring-the-aws-cli-1">Configuring the AWS (CLI)</h3>
+<ul>
+<li><p>Configure credentials</p>
+<pre><code>aws configure
+AWS Access Key ID [None]: AKIAIOSFODNN7EXAMPLE
+AWS Secret Access Key [None]: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+Default region name [None]: ap-southeast-1
+Default output format [None]: json</code></pre></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="demo">Demo:</h3>
+<ul>
+<li>Install and setup AWS (CLI)</li>
+</ul>
+<pre><code>pip install --upgrade --user awscli aws-shell
+
+aws configure
+
+aws ec2 describe-regions</code></pre>
+</section>
+<section class="slide level1">
+
+<h3 id="aws-cli-syntax">AWS (CLI) Syntax</h3>
+<ul>
+<li><p>Syntax :</p>
+<pre><code>aws [options] &lt;command&gt; &lt;subcommand&gt; [parameters]</code></pre></li>
+<li>Help : <em><strong>aws command help</strong></em></li>
+<li>Universal Options:
+<ul>
+<li><em><strong>--debug</strong></em> Turn on debug logging</li>
+<li><em>-<strong>-output</strong></em> Output format json, text, table</li>
+<li><em><strong>--query</strong></em> JMESPath query to use in filtering</li>
+<li><em><strong>--region</strong></em> The region to use</li>
+<li><em><strong>...</strong></em></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<h3 id="demo-1">Demo:</h3>
+<ul>
+<li>AWS (CLI) Synopsis</li>
+</ul>
+<pre><code>aws s3 ls
+
+aws ec2 describe-regions help
+
+aws ec2 describe-regions --output table
+
+aws ec2 describe-regions --debug
+
+aws ec2 describe-regions --filters \
+&quot;Name=endpoint,Values=*ap*&quot;
+
+aws ec2 describe-regions --query \
+&#39;Regions[].{Name:RegionName}&#39; --output text
+
+aws ec2 describe-regions --filters \
+&quot;Name=endpoint,Values=*ap*&quot; --query \
+&#39;Regions[].{Name:RegionName}&#39; --output text</code></pre>
+</section>
+<section class="slide level1">
+
+<h2 id="section">###</h2>
+</section>
+    </div>
+  </div>
+
+
+  <script src="reveal.js/lib/js/head.min.js"></script>
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available here:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,         // Display controls in the bottom right corner
+        progress: true,         // Display a presentation progress bar
+        history: true,          // Push each slide change to the browser history
+        center: false,                       // Vertical centering of slides
+        maxScale: 1.5,                  // Bounds for smallest/largest possible content scale
+        slideNumber: false,                // Display the page number of the current slide
+        theme: 'white', // available themes are in /css/theme
+        transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+        // Optional libraries used to extend on reveal.js
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } },
+//          { src: 'reveal.js/plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; }, }
+//          { src: 'reveal.js/plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+]});
+    </script>
+    </body>
+</html>
