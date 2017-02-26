@@ -142,8 +142,8 @@
 <ul>
 <li>Shell Command Completion
 <ul>
-<li>find your shell : <em><strong>echo $SHELL</strong></em></li>
-<li>find aws_completer : <em><strong>which aws_completer</strong></em></li>
+<li>find your shell : <em>echo $SHELL</em> or <em>echo $0</em></li>
+<li>find aws_completer : <em>which aws_completer</em></li>
 <li>enable command completion :
 <ul>
 <li><p>bash :</p>
@@ -221,7 +221,7 @@ aws ec2 describe-regions --filters &quot;Name=endpoint,Values=*ap*&quot; \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-2">Demo</h3>
+<h3 id="demo-2">Demo:</h3>
 <ul>
 <li>Check on available resource</li>
 </ul>
@@ -239,7 +239,7 @@ aws ec2 describe-subnets --region us-east-2</code></pre>
 </section>
 <section class="slide level1">
 
-<h3 id="demo-3">Demo</h3>
+<h3 id="demo-3">Demo:</h3>
 <ul>
 <li>Create our 1st VPC</li>
 </ul>
@@ -255,7 +255,7 @@ aws ec2 modify-vpc-attribute --vpc-id vpc-idxxxx \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-4">Demo</h3>
+<h3 id="demo-4">Demo:</h3>
 <ul>
 <li>Associate DHCP to VPC</li>
 </ul>
@@ -269,7 +269,7 @@ aws ec2 create-tags --resources vpc-idxxxx dopt-idxxxx \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-5">Demo</h3>
+<h3 id="demo-5">Demo:</h3>
 <ul>
 <li>Create Subnets for VPC</li>
 </ul>
@@ -291,9 +291,9 @@ ec2 modify-subnet-attribute --subnet-id subnet-idxxxxb \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-6">Demo</h3>
+<h3 id="demo-6">Demo:</h3>
 <ul>
-<li>So Copy/Paste is not an option let's try in programmatic way pass as VAR</li>
+<li>Copy/Paste is not an option, try in programmatic way as var</li>
 </ul>
 <pre><code>aws ec2 create-vpc --cidr-block 172.30.0.0/16 \
 --generate-cli-skeleton output
@@ -307,7 +307,7 @@ aws ec2 create-vpc --cidr-block 172.30.0.0/16 \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-7">Demo</h3>
+<h3 id="demo-7">Demo:</h3>
 <ul>
 <li>Let's try and create VPC and pass VpcId as Shell VAR</li>
 </ul>
@@ -326,7 +326,7 @@ aws ec2 describe-vpcs | jq .</code></pre>
 </section>
 <section class="slide level1">
 
-<h3 id="demo-8">Demo</h3>
+<h3 id="demo-8">Demo:</h3>
 <ul>
 <li>Create Subnets</li>
 </ul>
@@ -346,13 +346,11 @@ aws ec2 modify-subnet-attribute --subnet-id $aws_subn_1 \
 --map-public-ip-on-launch
 
 aws ec2 modify-subnet-attribute --subnet-id $aws_subn_2 \
---map-public-ip-on-launch
-
-set | grep aws</code></pre>
+--map-public-ip-on-launch</code></pre>
 </section>
 <section class="slide level1">
 
-<h3 id="demo-9">Demo</h3>
+<h3 id="demo-9">Demo:</h3>
 <ul>
 <li>Route Table Subnet association</li>
 </ul>
@@ -367,7 +365,7 @@ $aws_rout_tbl --subnet-id $aws_subn_2 | jq .AssociationId -r)</code></pre>
 </section>
 <section class="slide level1">
 
-<h3 id="demo-10">Demo</h3>
+<h3 id="demo-10">Demo:</h3>
 <ul>
 <li>Internet Gateway and internet route</li>
 </ul>
@@ -383,7 +381,7 @@ aws ec2 create-route --route-table-id $aws_rout_tbl \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-11">Demo</h3>
+<h3 id="demo-11">Demo:</h3>
 <ul>
 <li>Let's create some securely Groups</li>
 </ul>
@@ -409,7 +407,7 @@ aws_sec_elb=$(aws ec2 create-security-group --group-name elb \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-12">Demo</h3>
+<h3 id="demo-12">Demo:</h3>
 <ul>
 <li>Add access permissions to security Groups</li>
 </ul>
@@ -418,7 +416,7 @@ aws_sec_elb=$(aws ec2 create-security-group --group-name elb \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-13">Demo</h3>
+<h3 id="demo-13">Demo:</h3>
 <ul>
 <li><p>Add Ports to cicd group</p>
 <pre><code>aws ec2 authorize-security-group-ingress --group-id $aws_sec_cicd --ip-permissions \
@@ -433,7 +431,7 @@ aws_sec_elb=$(aws ec2 create-security-group --group-name elb \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-14">Demo</h3>
+<h3 id="demo-14">Demo:</h3>
 <ul>
 <li><p>Add Ports to rds group</p>
 <pre><code>aws ec2 authorize-security-group-ingress --group-id $aws_sec_rds --ip-permissions \
@@ -445,7 +443,7 @@ aws_sec_elb=$(aws ec2 create-security-group --group-name elb \
 </section>
 <section class="slide level1">
 
-<h3 id="demo-15">Demo</h3>
+<h3 id="demo-15">Demo:</h3>
 <ul>
 <li>Assigning tags to AWS resources</li>
 </ul>
@@ -456,28 +454,13 @@ Key=Name,Value=crash_cours</code></pre>
 </section>
 <section class="slide level1">
 
-<h3 id="section"></h3>
-<ul>
-<li>Let's check our creation</li>
-</ul>
-<pre><code>aws ec2 describe-vpcs | jq .
-aws ec2 describe-subnets | jq .
-aws ec2 describe-internet-gateways | jq .
-aws ec2 describe-network-acls | jq .
-aws ec2 describe-route-tables | jq .
-aws ec2 describe-security-groups | jq .
-aws ec2 describe-dhcp-options | jq .
-aws ec2 describe-tags | jq .
-
-set | grep aws_</code></pre>
-</section>
-<section class="slide level1">
-
 <h3 id="lets-try-to-script-it">Let's try to script it</h3>
 <ul>
 <li>Gather env var from our aws account</li>
 </ul>
-<pre><code>cat env.sh
+<pre><code>set | grep aws_
+
+cat env.sh
 
 . ./env.sh</code></pre>
 </section>
@@ -493,43 +476,16 @@ set | grep aws_</code></pre>
 </section>
 <section class="slide level1">
 
-<h3 id="questions">Questions ?</h3>
+<h3 id="resources">Resources</h3>
 <ul>
-<li></li>
+<li>Presentation available online at <a href="">awscli.mudrii.com</a></li>
+<li>Sources of this presentation is available online at <a href="https://github.com/mudrii/awscli.git" class="uri">https://github.com/mudrii/awscli.git</a></li>
+<li>mode detailed reading <a href="http://docs.aws.amazon.com/cli/latest/userguide/aws-cli.pdf">Official PDF</a></li>
+<li><h2 id="aws-cli-reference-aws-command-line-reference">AWS (CLI) reference <a href="http://docs.aws.amazon.com/cli/latest/reference/#available-services">AWS Command Line Reference</a></h2></li>
 </ul>
-<pre><code></code></pre>
 </section>
-<section class="slide level1">
-
-<h3 id="section-1"></h3>
-<ul>
-<li></li>
-</ul>
-<pre><code></code></pre>
-</section>
-<section class="slide level1">
-
-<h3 id="section-2"></h3>
-<ul>
-<li></li>
-</ul>
-<pre><code></code></pre>
-</section>
-<section class="slide level1">
-
-<h3 id="section-3"></h3>
-<ul>
-<li></li>
-</ul>
-<pre><code></code></pre>
-</section>
-<section class="slide level1">
-
-<h3 id="section-4"></h3>
-<ul>
-<li></li>
-</ul>
-<pre><code></code></pre>
+<section id="questions" class="slide level1">
+<h1>Questions ?</h1>
 </section>
 <section class="slide level1">
 

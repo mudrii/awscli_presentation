@@ -97,8 +97,8 @@ brew install awscli
 ### Configuring the AWS (CLI)
 
 * Shell Command Completion
-    * find your shell : _**echo $SHELL**_
-    * find aws_completer : _**which aws_completer**_
+    * find your shell : _echo $SHELL_ or _echo $0_
+    * find aws_completer : _which aws_completer_
     * enable command completion :
         * bash :
 ```
@@ -179,7 +179,7 @@ aws ec2 describe-regions --filters "Name=endpoint,Values=*ap*" \
 
 ---
 
-### Demo
+### Demo:
 
 * Check on available resource
 
@@ -199,7 +199,7 @@ aws ec2 describe-subnets --region us-east-2
 
 ---
 
-### Demo
+### Demo:
 
 * Create our 1st VPC
 
@@ -217,7 +217,7 @@ aws ec2 modify-vpc-attribute --vpc-id vpc-idxxxx \
 
 ---
 
-### Demo
+### Demo:
 
 * Associate DHCP to VPC
 
@@ -233,7 +233,7 @@ aws ec2 create-tags --resources vpc-idxxxx dopt-idxxxx \
 
 ---
 
-### Demo
+### Demo:
 
 * Create Subnets for VPC
 
@@ -257,9 +257,9 @@ ec2 modify-subnet-attribute --subnet-id subnet-idxxxxb \
 
 ---
 
-### Demo
+### Demo:
 
-* So Copy/Paste is not an option let's try in programmatic way pass as VAR
+* Copy/Paste is not an option, try in programmatic way as var
 
 ```
 aws ec2 create-vpc --cidr-block 172.30.0.0/16 \
@@ -275,7 +275,7 @@ aws ec2 create-vpc --cidr-block 172.30.0.0/16 \
 
 ---
 
-### Demo
+### Demo:
 
 * Let's try and create VPC and pass VpcId as Shell VAR
 
@@ -296,7 +296,7 @@ aws ec2 describe-vpcs | jq .
 
 ---
 
-### Demo
+### Demo:
 
 * Create Subnets
 
@@ -318,13 +318,11 @@ aws ec2 modify-subnet-attribute --subnet-id $aws_subn_1 \
 
 aws ec2 modify-subnet-attribute --subnet-id $aws_subn_2 \
 --map-public-ip-on-launch
-
-set | grep aws
 ```
 
 ---
 
-### Demo
+### Demo:
 
 * Route Table Subnet association
 
@@ -341,7 +339,7 @@ $aws_rout_tbl --subnet-id $aws_subn_2 | jq .AssociationId -r)
 
 ---
 
-### Demo
+### Demo:
 
 * Internet Gateway and internet route
 
@@ -359,7 +357,7 @@ aws ec2 create-route --route-table-id $aws_rout_tbl \
 
 ---
 
-### Demo
+### Demo:
 
 * Let's create some securely Groups
 
@@ -387,7 +385,7 @@ aws_sec_elb=$(aws ec2 create-security-group --group-name elb \
 
 ---
 
-### Demo
+### Demo:
 
 * Add access permissions to security Groups
 
@@ -398,7 +396,7 @@ ec2 authorize-security-group-ingress --group-id sg-xxxxxxx  \
 
 ---
 
-### Demo
+### Demo:
 
 * Add Ports to cicd group
 ```
@@ -418,7 +416,7 @@ aws ec2 authorize-security-group-ingress --group-id $aws_sec_elb --ip-permission
 
 ---
 
-### Demo
+### Demo:
 
 * Add Ports to rds group
 ```
@@ -433,7 +431,7 @@ aws ec2 authorize-security-group-ingress --group-id $aws_sec_redi --ip-permissio
 
 ---
 
-### Demo
+### Demo:
 
 * Assigning tags to AWS resources
 
@@ -446,30 +444,13 @@ Key=Name,Value=crash_cours
 
 ---
 
-###
-
-* Let's check our creation
-
-```
-aws ec2 describe-vpcs | jq .
-aws ec2 describe-subnets | jq .
-aws ec2 describe-internet-gateways | jq .
-aws ec2 describe-network-acls | jq .
-aws ec2 describe-route-tables | jq .
-aws ec2 describe-security-groups | jq .
-aws ec2 describe-dhcp-options | jq .
-aws ec2 describe-tags | jq .
-
-set | grep aws_
-```
-
----
-
 ### Let's try to script it
 
 * Gather env var from our aws account
 
 ```
+set | grep aws_
+
 cat env.sh
 
 . ./env.sh
@@ -489,54 +470,15 @@ less create_env.sh
 
 ---
 
-### Questions ?
+### Resources
 
-*
-
-```
-
-```
-
+* Presentation available online at [awscli.mudrii.com]()
+* Sources of this presentation is available online at
+  [https://github.com/mudrii/awscli.git](https://github.com/mudrii/awscli.git)
+* mode detailed reading [Official PDF](http://docs.aws.amazon.com/cli/latest/userguide/aws-cli.pdf)
+* AWS (CLI) reference [AWS Command Line Reference](http://docs.aws.amazon.com/cli/latest/reference/#available-services)
 ---
 
-###
-
-*
-
-```
-
-```
+#Questions ?
 
 ---
-
-###
-
-*
-
-```
-
-```
-
----
-
-###
-
-*
-
-```
-
-```
-
----
-
-###
-
-*
-
-```
-
-```
-
----
-
-
