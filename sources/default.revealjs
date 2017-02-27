@@ -82,6 +82,21 @@ $body$
   <script src="$revealjs-url$/lib/js/head.min.js"></script>
   <script src="$revealjs-url$/js/reveal.js"></script>
 
+<style>
+  .reveal .controls {
+    visibility: hidden;
+  }
+  .notes .reveal .controls {
+    visibility: visible;
+  }
+</style>
+
+<script>
+  if (window.self !== window.top) {
+    document.body.className += " notes";
+  }
+</script>
+
   <script>
 
       // Full list of configuration options available here:

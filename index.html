@@ -55,7 +55,7 @@
 <li>There might be mistakes (Feedback is Welcome)</li>
 <li>There might be missing or incomplete information</li>
 <li>Presentation available online at <a href="">awscli.mudrii.com</a></li>
-<li>Sources of this presentation is available online at <a href="https://github.com/mudrii/awscli.git" class="uri">https://github.com/mudrii/awscli.git</a></li>
+<li>Sources of this presentation available on <a href="https://github.com/mudrii/awscli.git" class="uri">https://github.com/mudrii/awscli.git</a></li>
 </ul>
 </section>
 <section class="slide level1">
@@ -65,7 +65,7 @@
 <li>The AWS Command Line Interface (CLI) is a unified tool to manage AWS services.</li>
 <li>With just one tool
 <ul>
-<li>can control multiple AWS services</li>
+<li>control multiple AWS services</li>
 <li>automate them through scripts</li>
 <li>manage aws resources programmatically</li>
 <li>...</li>
@@ -84,7 +84,7 @@
 <li>No other complicated setup is required
 <ul>
 <li>if you have AWS account and have aws_access_key and aws_secret_key you can run AWS cli against your AWS environment</li>
-<li>make sure your AWS user have right access and right IAM policy</li>
+<li>make sure your AWS user has the right access and IAM policy</li>
 </ul></li>
 </ul>
 </section>
@@ -481,7 +481,7 @@ cat env.sh
 <li>Presentation available online at <a href="">awscli.mudrii.com</a></li>
 <li>Sources of this presentation is available online at <a href="https://github.com/mudrii/awscli.git" class="uri">https://github.com/mudrii/awscli.git</a></li>
 <li>mode detailed reading <a href="http://docs.aws.amazon.com/cli/latest/userguide/aws-cli.pdf">Official PDF</a></li>
-<li><h2 id="aws-cli-reference-aws-command-line-reference">AWS (CLI) reference <a href="http://docs.aws.amazon.com/cli/latest/reference/#available-services">AWS Command Line Reference</a></h2></li>
+<li>AWS (CLI) reference <a href="http://docs.aws.amazon.com/cli/latest/reference/#available-services">AWS Command Line Reference</a></li>
 </ul>
 </section>
 <section id="questions" class="slide level1">
@@ -496,6 +496,21 @@ cat env.sh
 
   <script src="reveal.js/lib/js/head.min.js"></script>
   <script src="reveal.js/js/reveal.js"></script>
+
+<style>
+  .reveal .controls {
+    visibility: hidden;
+  }
+  .notes .reveal .controls {
+    visibility: visible;
+  }
+</style>
+
+<script>
+  if (window.self !== window.top) {
+    document.body.className += " notes";
+  }
+</script>
 
   <script>
 
