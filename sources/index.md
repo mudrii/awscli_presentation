@@ -19,7 +19,7 @@
 * There might be mistakes (Feedback is Welcome)
 * There might be missing or incomplete information
 * Presentation available online at [awscli.mudrii.com]()
-* Sources of this presentation is available online at
+* Sources of this presentation available on
   [https://github.com/mudrii/awscli.git](https://github.com/mudrii/awscli.git)
 
 
@@ -29,7 +29,7 @@
 
 * The AWS Command Line Interface (CLI) is a unified tool to manage AWS services.
 * With just one tool
-    * can control multiple AWS services
+    * control multiple AWS services
     * automate them through scripts
     * manage aws resources programmatically
     * ...
@@ -44,7 +44,7 @@
 
 * No other complicated setup is required
     - if you have AWS account and have aws_access_key and aws_secret_key you can run AWS cli against your AWS environment
-    - make sure your AWS user have right access and right IAM policy
+    - make sure your AWS user has the right access and IAM policy
 
 ---
 
