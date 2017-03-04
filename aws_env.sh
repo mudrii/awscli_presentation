@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -v
 
 aws_vpc_id=$(aws ec2 describe-vpcs | jq .Vpcs[].VpcId -r)
 
@@ -8,7 +8,7 @@ aws_subn_1=$(aws ec2 describe-subnets --filters Name=availabilityZone,Values=ap-
 
 aws_subn_2=$(aws ec2 describe-subnets --filters Name=availabilityZone,Values=ap-southeast-1b | jq .Subnets[].SubnetId -r)
 
-aws_rout_tbl=$(aws ec2 describe-route-tables | jq .RouteTables[].RouteTableId -r)
+aws_rout_tbl=$(aws ec2 describe-route-tables | jq .RouteTables[0].RouteTableId -r)
 
 aws_rout_ass1=$(aws ec2 describe-route-tables | jq .RouteTables[].Associations[0].RouteTableAssociationId -r)
 
@@ -28,26 +28,29 @@ aws_sec_elb=$(aws ec2 describe-security-groups --filters  Name=group-name,Values
 
 aws_db_subn=$(aws rds describe-db-subnet-groups | jq .DBSubnetGroups[].DBSubnetGroupName -r)
 
-db_id=$(aws rds describe-db-instances | jq .DBInstances[].DBInstanceIdentifier -r)
+aws_db_id=$(aws rds describe-db-instances | jq .DBInstances[].DBInstanceIdentifier -r)
 
-el_cash_subn=$(aws elasticache describe-cache-subnet-groups | jq .CacheSubnetGroups[].CacheSubnetGroupName -r)
+aws_el_cash_subn=$(aws elasticache describe-cache-subnet-groups | jq .CacheSubnetGroups[].CacheSubnetGroupName -r)
 
 aws_el_clust_id=$(aws elasticache describe-cache-clusters | jq .CacheClusters[].CacheClusterId -r)
 
-aws_elb2_arn=$(aws elbv2 describe-load-balancers | jq .LoadBalancers[].LoadBalancerArn -r)
+aws_elbv2_arn=$(aws elbv2 describe-load-balancers | jq .LoadBalancers[].LoadBalancerArn -r)
 
-aws_elb2_http_arn=$(aws elbv2 describe-target-groups --names http | jq .TargetGroups[].TargetGroupArn -r)
+aws_elbv2_http_arn=$(aws elbv2 describe-target-groups --names http | jq .TargetGroups[].TargetGroupArn -r)
 
-aws_elb2_https_arn=$(aws elbv2 describe-target-groups --names https | jq .TargetGroups[].TargetGroupArn -r)
+aws_elbv2_https_arn=$(aws elbv2 describe-target-groups --names https | jq .TargetGroups[].TargetGroupArn -r)
 
 aws_cert=$(aws acm list-certificates | jq .CertificateSummaryList[].CertificateArn -r)
 
-aws_elbv2_list_http=$(aws elbv2 describe-listeners --load-balancer-arn $aws_elb2_arn | jq .Listeners[0].ListenerArn -r)
+aws_elbv2_list_http=$(aws elbv2 describe-listeners --load-balancer-arn $aws_elbv2_arn | jq .Listeners[0].ListenerArn -r)
 
-aws_elbv2_list_https=$(aws elbv2 describe-listeners --load-balancer-arn $aws_elb2_arn | jq .Listeners[1].ListenerArn -r)
+aws_elbv2_list_https=$(aws elbv2 describe-listeners --load-balancer-arn $aws_elbv2_arn | jq .Listeners[1].ListenerArn -r)
+
+aws_my_ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
+
+set | grep aws_
 
 #aws_acc_id=$(aws ec2 describe-security-groups --group-names 'Default' --query 'SecurityGroups[0].OwnerId' --output text)
-
 #shmod +x aws_env.sh
 
 #source ./aws_env.sh

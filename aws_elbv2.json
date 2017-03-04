@@ -1,19 +1,15 @@
 {
-  "Id": "Policy1429136655940",
   "Version": "2012-10-17",
+  "Id": "AWSConsole-AccessLogs-Policy-1488622312751",
   "Statement": [
     {
-      "Sid": "Stmt1429136633762",
-      "Action": [
-        "s3:PutObject"
-      ],
+      "Sid": "AWSConsoleStmt-1488622312751",
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::crash-course-logs1/crashcourse/AWSLogs/${aws:userid}/*",
       "Principal": {
-        "AWS": [
-          "114774131450"
-        ]
-      }
+        "AWS": "arn:aws:iam::114774131450:root"
+      },
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::crash-course-logs/AWSLogs/443673411047/*"
     }
   ]
 }

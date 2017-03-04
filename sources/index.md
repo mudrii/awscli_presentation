@@ -6,10 +6,9 @@
 
 ### About me
 
-* SCB CDO Foundation Services DevOps Lead,
+* SCB CDO DevOps Lead,
 * Economist by training
 * AWS Certified
-* Leading EDMI, eOps, RPA and few other DevOps Teams
 
 ---
 
@@ -18,10 +17,6 @@
 * This Crash Course is NOT 100% tested !
 * There might be mistakes (Feedback is Welcome)
 * There might be missing or incomplete information
-* Presentation available online at [awscli.mudrii.com]()
-* Sources of this presentation available on
-  [https://github.com/mudrii/awscli.git](https://github.com/mudrii/awscli.git)
-
 
 ---
 
@@ -57,7 +52,6 @@
 * AWS (CLI) Components
     - [aws-cli](https://github.com/aws/aws-cli)
     - [aws-shell](https://github.com/awslabs/aws-shell)
-
 
 ---
 
@@ -181,26 +175,6 @@ aws ec2 describe-regions --filters "Name=endpoint,Values=*ap*" \
 
 ### Demo:
 
-* Check on available resource
-
-```
-aws ec2 describe-availability-zones
-
-aws ec2 describe-vpcs
-
-aws ec2 describe-vpcs --region us-east-2
-
-aws ec2 describe-dhcp-options
-
-aws ec2 describe-subnets
-
-aws ec2 describe-subnets --region us-east-2
-```
-
----
-
-### Demo:
-
 * Create our 1st VPC
 
 ```
@@ -229,30 +203,6 @@ aws ec2 associate-dhcp-options --dhcp-options-id dopt-idxxxx \
 
 aws ec2 create-tags --resources vpc-idxxxx dopt-idxxxx \
 --tags Key=Name,Value=crash_course Key=Stack,Value=test
-```
-
----
-
-### Demo:
-
-* Create Subnets for VPC
-
-```
-aws ec2 describe-subnets
-
-ec2 create-subnet --vpc-id vpc-idxxxx --cidr-block 172.30.0.0/24 \
---availability-zone ap-southeast-1a
-
-ec2 create-subnet --vpc-id vpc-idxxxx --cidr-block 172.30.1.0/24 \
---availability-zone ap-southeast-1b
-
-aws ec2 describe-subnets
-
-ec2 modify-subnet-attribute --subnet-id subnet-idxxaxa \
---map-public-ip-on-launch
-
-ec2 modify-subnet-attribute --subnet-id subnet-idxxxxb \
---map-public-ip-on-launch
 ```
 
 ---
@@ -390,7 +340,7 @@ aws_sec_elb=$(aws ec2 create-security-group --group-name elb \
 * Add access permissions to security Groups
 
 ```
-ec2 authorize-security-group-ingress --group-id sg-xxxxxxx  \
+ec2 authorize-security-group-ingress --group-id $aws_sec_cicd  \
 --protocol tcp --port 22 --cidr 0.0.0.0/0
 ```
 
@@ -480,6 +430,6 @@ less create_env.sh
 
 ---
 
-#Questions ?
+# Questions ?
 
 ---
