@@ -144,10 +144,20 @@ aws ec2 describe-security-groups --group-ids $aws_sec_redi | jq .
 #
 #aws elbv2 modify-load-balancer-attributes --load-balancer-arn $aws_elb2_arn --attributes Key=access_logs.s3.enabled,Value=true Key=access_logs.s3.bucket,Value=crash-course-logs | jq .
 
-## creating ec2
-#
+# creating ec2
+
 #aws ec2 describe-key-pairs | jq .
 #aws ec2 describe-instance-status | jq .
+#aws_ec2_master=$(aws ec2 run-instances --image-id ami-2c95344f --user-data file://master.sh --instance-type t2.micro --count 1  --key-name mudrii --monitoring Enabled=false --subnet-id $aws_subn_1 --security-group-ids $aws_sec_cicd --iam-instance-profile Name=master | jq .Instances[].InstanceId -r)
+#
+#aws_ec2_minion=$(aws ec2 run-instances --image-id ami-2c95344f --user-data file://minion.sh --instance-type t2.micro --count 1  --key-name mudrii --monitoring Enabled=false --subnet-id $aws_subn_1 --security-group-ids $aws_sec_app --iam-instance-profile Name=minion | jq .Instances[].InstanceId -r)
+aws ec2 create-tags --resources $aws_ec2_minion $aws_ec2_master --tags Key=Name,Value=crash_course Key=Stack,Value=test
+
+aws ec2 describe-volumes | jq -r '.Volumes[] | "\(.AvailabilityZone) \(.Attachments) \(.VolumeId) \(.Size)"'
+aws ec2 describe-volumes --region ap-southeast-1 --filters Name=volume-id,Values=vol-ab2f5a76,vol-7e78e1fa | jq .
+
+#--generate-cli-skeleton output
+
 #aws ec2 describe-instances | jq .Reservations[].Instances[].State.Name
 #aws ec2 describe-instances | jq .Reservations[].Instances[].InstanceId
 #aws ec2 describe-instances | jq .Reservations[].Instances[].PrivateIpAddress
