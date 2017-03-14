@@ -2,33 +2,33 @@
 
 . ./aws_env.sh && \
 
-## Delete ELBV2
-#aws elbv2 describe-listeners --load-balancer-arn $aws_elbv2_arn  | jq .
-#aws elbv2 delete-listener --listener-arn $aws_elbv2_list_https
-#aws elbv2 delete-listener --listener-arn $aws_elbv2_list_http
-#aws elbv2 describe-listeners --load-balancer-arn $aws_elbv2_arn  | jq .
-#
-#aws elbv2 describe-target-groups  | jq .
-#aws elbv2 delete-target-group --target-group-arn $aws_elbv2_https_arn
-#aws elbv2 delete-target-group --target-group-arn $aws_elbv2_http_arn
-#aws elbv2 describe-target-groups  | jq .
-#
-#aws elbv2 describe-load-balancers  | jq .
-#aws elbv2 delete-load-balancer --load-balancer-arn $aws_elbv2_arn
-#aws elbv2 describe-load-balancers  | jq .
+# Delete ELBV2
+aws elbv2 describe-listeners --load-balancer-arn $aws_elbv2_arn  | jq .
+aws elbv2 delete-listener --listener-arn $aws_elbv2_list_https
+aws elbv2 delete-listener --listener-arn $aws_elbv2_list_http
+aws elbv2 describe-listeners --load-balancer-arn $aws_elbv2_arn  | jq .
 
-# Delete ElastiCash Reis cluster
-#aws elasticache delete-cache-cluster  --cache-cluster-id  $aws_el_clust_id | jq .
-#aws elasticache describe-cache-clusters | jq .CacheClusters[].CacheClusterStatus
-#
-#aws elasticache delete-cache-subnet-group  --cache-subnet-group-name  $aws_el_cash_subn
-#aws elasticache describe-cache-subnet-groups | jq .
-#
-#aws rds delete-db-instance  --db-instance-identifier $aws_db_id --skip-final-snapshot | jq .
-#aws rds describe-db-instances | jq .DBInstances[].DBInstanceStatus
-#
-#aws rds delete-db-subnet-group --db-subnet-group-name $aws_db_subn
-#aws rds describe-db-subnet-groups | jq .
+aws elbv2 describe-target-groups  | jq .
+aws elbv2 delete-target-group --target-group-arn $aws_elbv2_https_arn
+aws elbv2 delete-target-group --target-group-arn $aws_elbv2_http_arn
+aws elbv2 describe-target-groups  | jq .
+
+aws elbv2 describe-load-balancers  | jq .
+aws elbv2 delete-load-balancer --load-balancer-arn $aws_elbv2_arn
+aws elbv2 describe-load-balancers  | jq .
+
+ Delete ElastiCash Reis cluster
+aws elasticache delete-cache-cluster  --cache-cluster-id  $aws_el_clust_id | jq .
+aws elasticache describe-cache-clusters | jq .CacheClusters[].CacheClusterStatus
+
+aws elasticache delete-cache-subnet-group  --cache-subnet-group-name  $aws_el_cash_subn
+aws elasticache describe-cache-subnet-groups | jq .
+
+aws rds delete-db-instance  --db-instance-identifier $aws_db_id --skip-final-snapshot | jq .
+aws rds describe-db-instances | jq .DBInstances[].DBInstanceStatus
+
+aws rds delete-db-subnet-group --db-subnet-group-name $aws_db_subn
+aws rds describe-db-subnet-groups | jq .
 
 # Delete rules for Securety groups
 aws ec2 revoke-security-group-ingress --group-id $aws_sec_cicd --ip-permissions '[{"IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "IpRanges": [{"CidrIp": "'$aws_my_ip'/32"}]},{"IpProtocol": "tcp", "FromPort": 8080, "ToPort": 8080, "IpRanges": [{"CidrIp": "'$aws_my_ip'/32"}]},{"IpProtocol": "-1", "FromPort": 0, "ToPort": 65535, "UserIdGroupPairs": [{"GroupId": "'$aws_sec_app'"}]},{"IpProtocol": "-1", "FromPort": 0, "ToPort": 65535, "UserIdGroupPairs": [{"GroupId": "'$aws_sec_cicd'"}]}]'

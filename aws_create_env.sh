@@ -85,64 +85,64 @@ aws ec2 describe-security-groups --group-ids $aws_sec_elb | jq .
 aws ec2 describe-security-groups --group-ids $aws_sec_redi | jq .
 
 
-## Create RDS
-#aws rds describe-db-subnet-groups | jq .
-#aws rds describe-db-instances | jq .
-#
-#aws_db_subn=$(aws rds create-db-subnet-group --db-subnet-group-name crash-course --subnet-ids $aws_subn_1 $aws_subn_2 --db-subnet-group-description crash-course-db --tags Key=Name,Value=crash_course Key=Stack,Value=Test --query DBSubnetGroup.DBSubnetGroupName --output text)
-#
-#aws_db_id=$(aws rds create-db-instance --db-instance-identifier crash-course --allocated-storage 5 --db-instance-class db.t2.micro --storage-type gp2 --engine mariadb --engine-version 10.1.19 --master-username root --master-user-password crashcourse --db-subnet-group-name crash-course --vpc-security-group-ids $aws_sec_rds --no-multi-az --publicly-accessible --tags Key=Name,Value=crash_course Key=Stack,Value=Test --query DBInstance.DBInstanceIdentifier --output text)
-#
-#aws rds describe-db-instances | jq .
-#aws rds describe-db-subnet-groups | jq .
-#
-## Create ElasticCashe
-#aws elasticache describe-cache-clusters | jq .
-#aws elasticache describe-cache-subnet-groups | jq .
-#
-#aws_el_cash_subn=$(aws elasticache create-cache-subnet-group --cache-subnet-group-name crash-course --cache-subnet-group-description crash-course-cashe --subnet-ids $aws_subn_1 $aws_subn_2 --query CacheSubnetGroup.CacheSubnetGroupName --output text)
-#
-#aws_el_clust_id=$(aws elasticache create-cache-cluster --cache-cluster-id crash-course --az-mode single-az --num-cache-nodes 1 --cache-node-type cache.t2.micro --engine redis --engine-version 3.2.4 --cache-subnet-group-name $aws_el_cash_subn --security-group-ids $aws_sec_redi --tags Key=Name,Value=crash_course Key=Stack,Value=Test --query CacheCluster.CacheClusterId --output text)
-#
-#aws elasticache describe-cache-clusters | jq .
-#aws elasticache describe-cache-subnet-groups | jq .
+# Create RDS
+aws rds describe-db-subnet-groups | jq .
+aws rds describe-db-instances | jq .
+
+aws_db_subn=$(aws rds create-db-subnet-group --db-subnet-group-name crash-course --subnet-ids $aws_subn_1 $aws_subn_2 --db-subnet-group-description crash-course-db --tags Key=Name,Value=crash_course Key=Stack,Value=Test --query DBSubnetGroup.DBSubnetGroupName --output text)
+
+aws_db_id=$(aws rds create-db-instance --db-instance-identifier crash-course --allocated-storage 5 --db-instance-class db.t2.micro --storage-type gp2 --engine mariadb --engine-version 10.1.19 --master-username root --master-user-password crashcourse --db-subnet-group-name crash-course --vpc-security-group-ids $aws_sec_rds --no-multi-az --publicly-accessible --tags Key=Name,Value=crash_course Key=Stack,Value=Test --query DBInstance.DBInstanceIdentifier --output text)
+
+aws rds describe-db-instances | jq .
+aws rds describe-db-subnet-groups | jq .
+
+# Create ElasticCashe
+aws elasticache describe-cache-clusters | jq .
+aws elasticache describe-cache-subnet-groups | jq .
+
+aws_el_cash_subn=$(aws elasticache create-cache-subnet-group --cache-subnet-group-name crash-course --cache-subnet-group-description crash-course-cashe --subnet-ids $aws_subn_1 $aws_subn_2 --query CacheSubnetGroup.CacheSubnetGroupName --output text)
+
+aws_el_clust_id=$(aws elasticache create-cache-cluster --cache-cluster-id crash-course --az-mode single-az --num-cache-nodes 1 --cache-node-type cache.t2.micro --engine redis --engine-version 3.2.4 --cache-subnet-group-name $aws_el_cash_subn --security-group-ids $aws_sec_redi --tags Key=Name,Value=crash_course Key=Stack,Value=Test --query CacheCluster.CacheClusterId --output text)
+
+aws elasticache describe-cache-clusters | jq .
+aws elasticache describe-cache-subnet-groups | jq .
 
 
-## Creating ELBv2
-#aws elbv2 describe-load-balancers | jq .
-#aws elbv2 describe-target-groups | jq .
-#
-#aws_elb2_name=$(aws elbv2 create-load-balancer --name crash-course --subnets $aws_subn_1 $aws_subn_2 --security-groups $aws_sec_elb --scheme internet-facing --tags Key=Name,Value=crash-course Key=Stack,Value=Test --query LoadBalancers[].LoadBalancerArn --output text)
-#
-#aws_elb2_arn=$(aws elbv2 describe-load-balancers | jq .LoadBalancers[].LoadBalancerArn -r)
-#
-#aws_elb2_http_arn=$(aws elbv2 create-target-group --name http --protocol HTTP --port 80 --vpc-id $aws_vpc_id --health-check-protocol HTTP --health-check-interval-seconds 30 --health-check-timeout-seconds 3 --healthy-threshold-count 2 --unhealthy-threshold-count 2 --query TargetGroups[].TargetGroupArn --output text)
-#
-#aws_elb2_https_arn=$(aws elbv2 create-target-group --name https --protocol HTTP --port 443 --vpc-id $aws_vpc_id --health-check-protocol HTTPS --health-check-interval-seconds 30 --health-check-timeout-seconds 3 --healthy-threshold-count 2 --unhealthy-threshold-count 2 --query TargetGroups[].TargetGroupArn --output text)
-#
-#aws elbv2 add-tags --resource-arns $aws_elb2_http_arn --tags Key=Name,Value=crash-course Key=Stack,Value=Test
-#
-#aws elbv2 add-tags --resource-arns $aws_elb2_https_arn --tags Key=Name,Value=crash-course Key=Stack,Value=Test
-#
-#aws_cert=$(aws acm list-certificates --query CertificateSummaryList[].CertificateArn --output text)
-#
-#aws_elbv2_list_http=$(aws elbv2 create-listener --load-balancer-arn  $aws_elb2_arn --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=$aws_elb2_http_arn | jq .Listeners[].ListenerArn -r)
-#
-#aws_elbv2_list_https=$(aws elbv2 create-listener  --load-balancer-arn  $aws_elb2_arn --protocol HTTPS --port 443 --certificates CertificateArn=$aws_cert --default-actions Type=forward,TargetGroupArn=$aws_elb2_https_arn | jq .Listeners[].ListenerArn -r)
-#
-#aws s3api list-buckets --query 'Buckets[].Name' | jq .
-#
-#aws s3api create-bucket --bucket crash-course-logs --region ap-southeast-1 --create-bucket-configuration LocationConstraint=ap-southeast-1 | jq .
-#
-#aws s3api list-objects --bucket crash-course-logs --query 'Contents[].{Key: Key, Size: Size}' | jq .
-#
-##aws_account_id=$(aws ec2 describe-security-groups --group-names 'Default' --query 'SecurityGroups[0].OwnerId' --output text)
-#
-#aws s3api put-bucket-policy --bucket crash-course-logs --policy file://aws_elbv2.json
-#
-#aws s3api get-bucket-policy  --bucket crash-course-logs
-#
-#aws elbv2 modify-load-balancer-attributes --load-balancer-arn $aws_elb2_arn --attributes Key=access_logs.s3.enabled,Value=true Key=access_logs.s3.bucket,Value=crash-course-logs | jq .
+# Creating ELBv2
+aws elbv2 describe-load-balancers | jq .
+aws elbv2 describe-target-groups | jq .
+
+aws_elb2_name=$(aws elbv2 create-load-balancer --name crash-course --subnets $aws_subn_1 $aws_subn_2 --security-groups $aws_sec_elb --scheme internet-facing --tags Key=Name,Value=crash-course Key=Stack,Value=Test --query LoadBalancers[].LoadBalancerArn --output text)
+
+aws_elb2_arn=$(aws elbv2 describe-load-balancers | jq .LoadBalancers[].LoadBalancerArn -r)
+
+aws_elb2_http_arn=$(aws elbv2 create-target-group --name http --protocol HTTP --port 80 --vpc-id $aws_vpc_id --health-check-protocol HTTP --health-check-interval-seconds 30 --health-check-timeout-seconds 3 --healthy-threshold-count 2 --unhealthy-threshold-count 2 --query TargetGroups[].TargetGroupArn --output text)
+
+aws_elb2_https_arn=$(aws elbv2 create-target-group --name https --protocol HTTP --port 443 --vpc-id $aws_vpc_id --health-check-protocol HTTPS --health-check-interval-seconds 30 --health-check-timeout-seconds 3 --healthy-threshold-count 2 --unhealthy-threshold-count 2 --query TargetGroups[].TargetGroupArn --output text)
+
+aws elbv2 add-tags --resource-arns $aws_elb2_http_arn --tags Key=Name,Value=crash-course Key=Stack,Value=Test
+
+aws elbv2 add-tags --resource-arns $aws_elb2_https_arn --tags Key=Name,Value=crash-course Key=Stack,Value=Test
+
+aws_cert=$(aws acm list-certificates --query CertificateSummaryList[].CertificateArn --output text)
+
+aws_elbv2_list_http=$(aws elbv2 create-listener --load-balancer-arn  $aws_elb2_arn --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=$aws_elb2_http_arn | jq .Listeners[].ListenerArn -r)
+
+aws_elbv2_list_https=$(aws elbv2 create-listener  --load-balancer-arn  $aws_elb2_arn --protocol HTTPS --port 443 --certificates CertificateArn=$aws_cert --default-actions Type=forward,TargetGroupArn=$aws_elb2_https_arn | jq .Listeners[].ListenerArn -r)
+
+aws s3api list-buckets --query 'Buckets[].Name' | jq .
+
+aws s3api create-bucket --bucket crash-course-logs --region ap-southeast-1 --create-bucket-configuration LocationConstraint=ap-southeast-1 | jq .
+
+aws s3api list-objects --bucket crash-course-logs --query 'Contents[].{Key: Key, Size: Size}' | jq .
+
+#aws_account_id=$(aws ec2 describe-security-groups --group-names 'Default' --query 'SecurityGroups[0].OwnerId' --output text)
+
+aws s3api put-bucket-policy --bucket crash-course-logs --policy file://aws_elbv2.json
+
+aws s3api get-bucket-policy  --bucket crash-course-logs
+
+aws elbv2 modify-load-balancer-attributes --load-balancer-arn $aws_elb2_arn --attributes Key=access_logs.s3.enabled,Value=true Key=access_logs.s3.bucket,Value=crash-course-logs | jq .
 
 # creating ec2
 
