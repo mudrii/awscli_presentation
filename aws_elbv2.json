@@ -9,7 +9,7 @@
         "AWS": "arn:aws:iam::114774131450:root"
       },
       "Action": "s3:PutObject",
-      "Resource": "arn:aws:s3:::crash-course-logs/AWSLogs/443673411047/*"
+      "Resource": "arn:aws:s3:::crash-course-logs/AWSLogs/YOUR_ACCOUNT_ID_NR/*"
     }
   ]
 }
