@@ -46,6 +46,10 @@ aws_elbv2_list_http=$(aws elbv2 describe-listeners --load-balancer-arn $aws_elbv
 
 aws_elbv2_list_https=$(aws elbv2 describe-listeners --load-balancer-arn $aws_elbv2_arn | jq .Listeners[1].ListenerArn -r)
 
+aws_ec2_master=$(aws ec2 describe-instances)
+
+aws_ec2_minion=$(aws ec2 describe-instances)
+
 aws_my_ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 
 set | grep aws_

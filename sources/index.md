@@ -401,9 +401,9 @@ Key=Name,Value=crash_cours
 ```
 set | grep aws_
 
-cat env.sh
+cat aws_env.sh
 
-. ./env.sh
+. ./aws_env.sh
 ```
 
 ---
@@ -415,7 +415,20 @@ cat env.sh
 ```
 less create_env.sh
 
-./create_env.sh
+./aws_create_env.sh
+```
+
+
+---
+
+### Delete complete infrastructure building script
+
+* Delete created infrastructure
+
+```
+less aws_del_env.sh
+
+./aws_del_env.sh
 ```
 
 ---
@@ -423,9 +436,9 @@ less create_env.sh
 ### Resources
 
 * Presentation available online at [awscli.mudrii.com]()
-* Sources of this presentation is available online at
+* Sources of this presentation is available at
   [https://github.com/mudrii/awscli.git](https://github.com/mudrii/awscli.git)
-* mode detailed reading [Official PDF](http://docs.aws.amazon.com/cli/latest/userguide/aws-cli.pdf)
+* More details on AWS CLI [Official PDF](http://docs.aws.amazon.com/cli/latest/userguide/aws-cli.pdf)
 * AWS (CLI) reference [AWS Command Line Reference](http://docs.aws.amazon.com/cli/latest/reference/#available-services)
 
 ---
